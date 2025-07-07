@@ -1,17 +1,17 @@
 import axios, { AxiosResponse } from 'axios';
-import { User, RegisterRequest, Property, InquiryRequest, InquiryResponse, Favorite, AdminStats, ApiResponse, TokenResponse, PaginatedApiResponse } from '@/types/types';
+import { User, RegisterRequest, Property, InquiryRequest, InquiryResponse, Favorite, AdminStats, ApiResponse, TokenResponse, PaginatedApiResponse, PropertyQueryParams } from '@/types/types';
 
-interface PropertyQueryParams {
-  city?: string;
-  price_min?: string;
-  price_max?: string;
-  listing_type?: 'sell' | 'rent' | '' | undefined;
-  is_featured?: boolean;
-  property_type?: string;
-  bedrooms?: number;
-  bathrooms?: number;
-  search?: string;
-}
+// interface PropertyQueryParams {
+//   city?: string;
+//   price_min?: string;
+//   price_max?: string;
+//   listing_type?: 'sell' | 'rent' | '' | undefined;
+//   is_featured?: boolean;
+//   property_type?: string;
+//   bedrooms?: number;
+//   bathrooms?: number;
+//   search?: string;
+// }
 
 const API_URL = 'https://real-estate-backend-ur4i.onrender.com/api/';
 

@@ -108,5 +108,4 @@ export interface PropertyQueryParams {
   page?: number;
   page_size?: number;
   agent_id?: number;
-  limit?: number;
 }
