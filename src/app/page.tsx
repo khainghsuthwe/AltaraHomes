@@ -15,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await getProperties({ is_featured: true, limit: 6 });
+        const response = await getProperties({ is_featured: true, page_size: 6 });
         setFeaturedProperties(response.data.results || []);
       } catch (err) {
         setError('Failed to load featured properties.');
