@@ -1,5 +1,9 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
+# 🏡 Real Estate Frontend – Next.js
+This is the frontend for the Real Estate platform built with **Next.js**, interacting with the backend API at:
+Plese find the **[Live Demo]() 
+The backend API is created using Django Rest Framework. 
+Please find the backend repo [here](https://github.com/khainghsuthwe/real_estate_backend)
+🔗 **[Backend Live Demo](https://real-estate-backend-ur4i.onrender.com)**
 ## Getting Started
 
 First, run the development server:
