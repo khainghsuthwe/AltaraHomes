@@ -54,7 +54,6 @@ export default function CreateProperty() {
     'Ayeyarwady',
   ];
 
-
   useEffect(() => {
     async function checkAuth() {
       try {
@@ -238,59 +237,26 @@ export default function CreateProperty() {
                 <option value="land">Land</option>
               </select>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-dark">Address</label>
-              <input
-                type="text"
-                value={formData.address}
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                required
-                className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-dark">City</label>
-              <input
-                type="text"
-                value={formData.city}
-                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                required
-                className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-dark">State</label>
-              <select
-                value={formData.state}
-                onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                required
-                className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-              >
-                <option value="">Select a state</option>
-                {MYANMAR_STATES.map((state) => (
-                  <option key={state} value={state}>
-                    {state}
-                  </option>
-                ))}
-              </select>
-            </div>
+          </div>
 
-            <div>
-              <label className="block text-sm font-medium text-dark">Zip Code</label>
-              <input
-                type="text"
-                value={formData.zip_code}
-                onChange={(e) => setFormData({ ...formData, zip_code: e.target.value })}
-                className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-              />
-            </div>
+          <div>
+            <label className="block text-sm font-medium text-dark">Description</label>
+            <textarea
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              required
+              rows={4}
+              className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-dark">Bedrooms</label>
               <input
                 type="number"
                 value={formData.bedrooms}
                 onChange={(e) => setFormData({ ...formData, bedrooms: Number(e.target.value) })}
-                required
                 min="0"
                 className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
@@ -301,29 +267,62 @@ export default function CreateProperty() {
                 type="number"
                 value={formData.bathrooms}
                 onChange={(e) => setFormData({ ...formData, bathrooms: Number(e.target.value) })}
-                required
                 min="0"
                 className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
             </div>
-            <div className="md:col-span-2">
+            <div>
               <label className="block text-sm font-medium text-dark">Square Feet</label>
               <input
                 type="number"
                 value={formData.square_feet}
                 onChange={(e) => setFormData({ ...formData, square_feet: Number(e.target.value) })}
-                required
                 min="0"
                 className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
             </div>
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-dark">Description</label>
-              <textarea
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                required
-                rows={4}
+            <div>
+              <label className="block text-sm font-medium text-dark">State</label>
+              <select
+                value={formData.state}
+                onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+                className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+              >
+                <option value="">Select state</option>
+                {MYANMAR_STATES.map((state) => (
+                  <option key={state} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-dark">City</label>
+              <input
+                type="text"
+                value={formData.city}
+                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-dark">Zip Code</label>
+              <input
+                type="text"
+                value={formData.zip_code}
+                onChange={(e) => setFormData({ ...formData, zip_code: e.target.value })}
+                className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-dark">Address</label>
+              <input
+                type="text"
+                value={formData.address}
+                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                 className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
             </div>
@@ -331,18 +330,18 @@ export default function CreateProperty() {
 
           <div>
             <label className="block text-sm font-medium text-dark">Amenities</label>
-            <div className="flex gap-2 mb-2">
+            <div className="flex space-x-2 mb-2">
               <input
                 type="text"
                 value={amenityInput}
                 onChange={(e) => setAmenityInput(e.target.value)}
-                placeholder="e.g., Pool, Garage"
-                className="flex-1 px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                className="flex-grow px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                placeholder="Add amenity"
               />
               <button
                 type="button"
                 onClick={addAmenity}
-                className="px-4 py-2 bg-primary text-light rounded-lg hover:bg-primary/90"
+                className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-dark"
               >
                 Add
               </button>
@@ -351,13 +350,14 @@ export default function CreateProperty() {
               {formData.amenities?.map((amenity) => (
                 <span
                   key={amenity}
-                  className="flex items-center bg-secondary text-dark text-sm px-3 py-1 rounded-full"
+                  className="flex items-center space-x-1 bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm"
                 >
-                  {amenity}
+                  <span>{amenity}</span>
                   <button
                     type="button"
                     onClick={() => removeAmenity(amenity)}
-                    className="ml-2 text-dark hover:text-danger"
+                    className="text-gray-500 hover:text-red-500"
+                    aria-label={`Remove ${amenity}`}
                   >
                     <XMarkIcon className="h-4 w-4" />
                   </button>
@@ -367,117 +367,98 @@ export default function CreateProperty() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-dark">Image URLs (Pexels)</label>
-            <div className="flex gap-2 mb-2">
+            <label className="block text-sm font-medium text-dark">Image URLs</label>
+            <div className="flex space-x-2 mb-2">
               <input
-                type="url"
+                type="text"
                 value={imageUrlInput}
                 onChange={(e) => setImageUrlInput(e.target.value)}
-                placeholder="https://images.pexels.com/photos/..."
-                className="flex-1 px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                className="flex-grow px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                placeholder="Add image URL"
               />
               <button
                 type="button"
                 onClick={addImageUrl}
-                className="px-4 py-2 bg-primary text-light rounded-lg hover:bg-primary/90"
+                className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-dark"
               >
                 Add
               </button>
             </div>
             <div className="flex flex-wrap gap-2">
               {formData.image_urls?.map((url) => (
-                <span
-                  key={url}
-                  className="flex items-center bg-secondary text-dark text-sm px-3 py-1 rounded-full"
-                >
-                  {url.substring(0, 20)}...
+                <div key={url} className="relative w-32 h-20 rounded overflow-hidden border border-gray-300">
+                  <img src={url} alt="Property" className="w-full h-full object-cover" />
                   <button
                     type="button"
                     onClick={() => removeImageUrl(url)}
-                    className="ml-2 text-dark hover:text-danger"
+                    className="absolute top-0 right-0 bg-black bg-opacity-50 text-white p-1 rounded-bl"
+                    aria-label="Remove image"
                   >
                     <XMarkIcon className="h-4 w-4" />
                   </button>
-                </span>
+                </div>
               ))}
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-dark">Location</label>
-            <div className="flex gap-2 mb-2">
+            <label className="block text-sm font-medium text-dark mb-2">Search Address on Map</label>
+            <div className="flex space-x-2 mb-4">
               <input
                 type="text"
                 value={addressSearch}
                 onChange={(e) => setAddressSearch(e.target.value)}
-                placeholder="Search address..."
-                className="flex-1 px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                placeholder="Type address to search"
+                className="flex-grow px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
               />
               <button
                 type="button"
                 onClick={searchAddress}
-                className="px-4 py-2 bg-primary text-light rounded-lg hover:bg-primary/90"
+                className="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent-dark"
               >
                 Search
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-4 mb-2">
-              <div>
-                <label className="block text-sm font-medium text-dark">Latitude</label>
-                <input
-                  type="number"
-                  value={formData.latitude ?? ''}
-                  onChange={(e) => setFormData({ ...formData, latitude: Number(e.target.value) })}
-                  step="any"
-                  className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-dark">Longitude</label>
-                <input
-                  type="number"
-                  value={formData.longitude ?? ''}
-                  onChange={(e) => setFormData({ ...formData, longitude: Number(e.target.value) })}
-                  step="any"
-                  className="w-full px-3 py-2 border border-dark/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
-                />
-              </div>
-            </div>
-            <div className="h-64 rounded-lg overflow-hidden">
+
+            <div className="h-96 rounded-lg overflow-hidden border border-gray-300">
               <MapContainer
-                center={[51.505, -0.09]}
+                center={
+                  formData.latitude && formData.longitude
+                    ? [formData.latitude, formData.longitude]
+                    : [16.8409, 96.1735] // Default Myanmar center
+                }
                 zoom={13}
+                scrollWheelZoom={true}
                 style={{ height: '100%', width: '100%' }}
-                className="rounded-lg"
               >
-                <TileLayer
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                />
-                {formData.latitude != null && formData.longitude != null && (
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <MapClickHandler />
+                {formData.latitude && formData.longitude && (
                   <Marker position={[formData.latitude, formData.longitude]}>
                     <Popup>Selected Location</Popup>
                   </Marker>
                 )}
-                <MapClickHandler />
               </MapContainer>
             </div>
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full px-4 py-3 bg-primary text-light rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-          >
-            <HomeIcon className="h-5 w-5 mr-2" />
-            {loading ? 'Creating Property...' : 'Create Property'}
-          </button>
+          <div className="flex justify-between items-center pt-4">
+            <Link
+              href="/properties"
+              className="inline-flex items-center px-6 py-2 border border-dark/50 rounded-lg text-dark hover:bg-gray-100"
+            >
+              <HomeIcon className="h-5 w-5 mr-2" />
+              Cancel
+            </Link>
+            <button
+              type="submit"
+              disabled={loading}
+              className="inline-flex items-center px-6 py-2 bg-accent text-white rounded-lg hover:bg-accent-dark disabled:opacity-50"
+            >
+              {loading ? 'Creating...' : 'Create Property'}
+            </button>
+          </div>
         </form>
-        <p className="mt-4 text-center text-dark/70">
-          <Link href="/properties" className="text-accent hover:text-accent/80">
-            Back to Properties
-          </Link>
-        </p>
       </div>
     </div>
   );
