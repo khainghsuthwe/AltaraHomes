@@ -1,103 +1,165 @@
-import Image from "next/image";
+'use client';
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { getProperties } from '@/lib/api';
+import { Property } from '@/types/types';
+import { useAuth } from '@/lib/auth-context';
+import { SparklesIcon } from '@heroicons/react/24/outline';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [featuredProperties, setFeaturedProperties] = useState<Property[]>([]);
+  const [error, setError] = useState('');
+  const { user, loading: authLoading } = useAuth();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await getProperties({ is_featured: true, limit: 6 });
+        setFeaturedProperties(response.data.results || []);
+      } catch (err) {
+        setError('Failed to load featured properties.');
+        console.error('Error fetching featured properties:', err);
+      }
+    }
+    fetchData();
+  }, []);
+
+  return (
+    <div className="bg-muted">
+      {/* Hero Section */}
+      <div className="bg-primary text-light py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl font-bold mb-4">Find Your Dream Home Today</h1>
+          <p className="text-lg mb-8">Whether you are renting, buying, or selling, we have the perfect property for you.</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/properties?listing_type=rent"
+              className="px-6 py-3 bg-light text-primary rounded-lg hover:bg-secondary transition-colors"
+            >
+              Rent a Home
+            </Link>
+            <Link
+              href="/properties"
+              className="px-6 py-3 bg-transparent border-2 border-light text-light rounded-lg hover:bg-light hover:text-primary transition-colors"
+            >
+              View Properties
+            </Link>
+            {!authLoading && user && (user.user_type === 'admin' || user.user_type === 'agent') && (
+              <Link
+                href="/create-property"
+                className="px-6 py-3 bg-success text-light rounded-lg hover:bg-success/90 transition-colors"
+              >
+                Sell a Property
+              </Link>
+            )}
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+
+      {/* CTA Section */}
+      <div className="bg-light py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-dark mb-6">Start Your Real Estate Journey</h2>
+          <p className="text-lg text-dark/70 mb-8">Explore our offerings and take the next step toward your dream property.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="p-6 bg-muted rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold text-dark mb-4">Rent a Home</h3>
+              <p className="text-dark/70 mb-4">Find the perfect rental property to suit your lifestyle.</p>
+              <Link
+                href="/properties?listing_type=rent"
+                className="inline-block px-4 py-2 bg-accent text-light rounded-lg hover:bg-accent/90 transition-colors"
+              >
+                Browse Rentals
+              </Link>
+            </div>
+
+            <div className="p-6 bg-muted rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold text-dark mb-4">Buy a Property</h3>
+              <p className="text-dark/70 mb-4">Discover homes for sale in your desired location.</p>
+              <Link
+                href="/properties?listing_type=sell"
+                className="inline-block px-4 py-2 bg-accent text-light rounded-lg hover:bg-accent/90 transition-colors"
+              >
+                Browse for Sale
+              </Link>
+            </div>
+
+            {!authLoading ? (
+              user && (user.user_type === 'admin' || user.user_type === 'agent') ? (
+                <div className="p-6 bg-muted rounded-lg shadow-md">
+                  <h3 className="text-xl font-bold text-dark">Sell Your Property</h3>
+                  <p className="text-dark/70 mb-4">List your property and reach potential buyers.</p>
+                  <Link
+                    href="/create-property"
+                    className="inline-block px-4 py-2 bg-success text-light rounded-lg hover:bg-success/90 transition-colors"
+                  >
+                    List Property
+                  </Link>
+                </div>
+              ) : (
+                <div className="p-6 bg-secondary rounded-lg shadow-md">
+                  <h3 className="text-xl font-bold text-dark">Join Our Community</h3>
+                  <p className="text-dark/70">Sign up to save favorites and contact agents.</p>
+                  <Link
+                    href="/register"
+                    className="inline-block px-4 py-2 bg-accent text-light rounded-lg hover:bg-accent/90 transition-colors"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              )
+            ) : (
+              <div className="p-6 bg-muted rounded-lg shadow-md">
+                <h3 className="text-dark/70 mb-4">Loading...</h3>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Featured Properties */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="max-w-full">
+          <h2 className="text-3xl font-bold text-dark mb-8 flex items-center">
+            <SparklesIcon className="h-8 w-8 text-accent mr-2" />
+            Featured Properties
+          </h2>
+
+          {error && <p className="text-danger">{error}</p>}
+          {featuredProperties.length === 0 && !error && (
+            <p className="text-dark/70 text-center">No featured properties available.</p>
+          )}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+            {featuredProperties.map((property) => (
+              <Link key={property.id} href={`/properties/${property.id}`} className="group">
+                <div className="bg-light rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                  <img
+                    src={property.image_urls[0] || '/placeholder.jpg'}
+                    alt={property.title}
+                    className="w-full h-48 object-cover group-hover:opacity-90 transition-opacity"
+                  />
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold text-dark">{property.title}</h3>
+                    <p className="text-dark/70 text-sm mb-2">
+                      {property.address}, {property.city}, {property.state}
+                    </p>
+                    <p className="text-accent font-bold">${property.price.toLocaleString()}</p>
+                    <div className="flex space-x-2 text-dark/70 text-sm mt-2">
+                      <span>{property.bedrooms} Beds</span>
+                      <span>•</span>
+                      <span>{property.bathrooms} Baths</span>
+                      <span>•</span>
+                      <span>{property.square_feet} sqft</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
