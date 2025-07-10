@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { getProperties } from '@/lib/api';
 import { Property, PropertyQueryParams } from '@/types/types';
 import PropertyCard from '@/components/PropertyCard';
 import PropertyFilter from '@/components/PropertyFilter';
 
-export default function PropertiesPage() {
+function PropertiesContent() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
@@ -19,10 +19,8 @@ export default function PropertiesPage() {
   const fetchProperties = async (params: PropertyQueryParams = {}) => {
     try {
       setLoading(true);
-
       const response = await getProperties(params);
       const data = response.data;
-
       setProperties(data.results || []);
       setCount(data.count || 0);
       setCurrentPage(Number(params.page) || 1);
@@ -34,7 +32,7 @@ export default function PropertiesPage() {
     }
   };
 
-  const updateURLParams = (params: Record<string, string | number | boolean >) => {
+  const updateURLParams = (params: Record<string, string | number | boolean>) => {
     const filteredParams = Object.entries(params)
       .filter(([, value]) => value !== undefined && value !== '')
       .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
@@ -53,9 +51,7 @@ export default function PropertiesPage() {
   return (
     <div className="container mx-auto p-4 bg-muted min-h-screen">
       <h2 className="text-3xl font-bold mb-4 text-dark">Properties</h2>
-
       <PropertyFilter onFilter={(filters) => updateURLParams({ ...filters, page: 1 })} />
-
       {loading ? (
         <p className="text-dark/70">Loading...</p>
       ) : properties.length === 0 ? (
@@ -67,7 +63,6 @@ export default function PropertiesPage() {
               <PropertyCard key={property.id} property={property} />
             ))}
           </div>
-
           {/* Pagination Controls */}
           <div className="flex justify-center items-center gap-4 mt-8">
             <button
@@ -77,11 +72,9 @@ export default function PropertiesPage() {
             >
               Previous
             </button>
-
             <span className="text-dark">
               Page {currentPage} of {totalPages}
             </span>
-
             <button
               onClick={() => updateURLParams({ page: currentPage + 1 })}
               disabled={currentPage === totalPages}
@@ -93,5 +86,13 @@ export default function PropertiesPage() {
         </>
       )}
     </div>
+  );
+}
+
+export default function PropertiesPage() {
+  return (
+    <Suspense fallback={<p className="text-center py-16 text-dark/70">Loading properties...</p>}>
+      <PropertiesContent />
+    </Suspense>
   );
 }
