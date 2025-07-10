@@ -6,6 +6,7 @@ import { getProperties } from '@/lib/api';
 import { Property, PropertyQueryParams } from '@/types/types';
 import PropertyCard from '@/components/PropertyCard';
 import PropertyFilter from '@/components/PropertyFilter';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 
 function PropertiesContent() {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -70,7 +71,7 @@ function PropertiesContent() {
               disabled={currentPage === 1}
               className="px-4 py-2 bg-primary text-light rounded disabled:opacity-50"
             >
-              Previous
+              <ChevronLeftIcon className="h-5 w-5" />
             </button>
             <span className="text-dark">
               Page {currentPage} of {totalPages}
@@ -80,7 +81,7 @@ function PropertiesContent() {
               disabled={currentPage === totalPages}
               className="px-4 py-2 bg-primary text-light rounded disabled:opacity-50"
             >
-              Next
+              <ChevronRightIcon className="h-5 w-5" />
             </button>
           </div>
         </>
