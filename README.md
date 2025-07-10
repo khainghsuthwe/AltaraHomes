@@ -1,8 +1,10 @@
 # 🏡 Real Estate Frontend – Next.js
-This is the frontend for the Real Estate platform built with **Next.js**, interacting with the backend API at:
-Plese find the **[Live Demo]() 
+This is the frontend for the Real Estate platform built with **Next.js**, interacting with the Django backend API integrated with PostgreSQL for data storage. 
+
+🔗 **[Frontend Live Demo](https://altara-homes.vercel.app)**
+
 The backend API is created using Django Rest Framework. 
-Please find the backend repo [here](https://github.com/khainghsuthwe/real_estate_backend)
+<!-- Please find the backend repo [here](https://github.com/khainghsuthwe/real_estate_backend) -->
 🔗 **[Backend Live Demo](https://real-estate-backend-ur4i.onrender.com)**
 ## Getting Started
 
